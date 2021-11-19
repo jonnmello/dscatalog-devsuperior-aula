@@ -40,7 +40,13 @@ public class Product implements Serializable {
 		joinColumns = @JoinColumn(name = "product_id"),
 		inverseJoinColumns = @JoinColumn(name = "category_id"))
 		Set<Category> categories = new HashSet<>();
-
+	
+	
+	//esse product vazio eu fiz 
+	public Product() {
+		
+	}
+	
 	public Product(Long id, String name, String description, Double price, String imgUrl, Instant date) {
 		
 		this.id = id;
