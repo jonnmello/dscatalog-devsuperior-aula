@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import com.devsuperior.dscatalog.entities.User;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private long id;
+	@NotBlank(message = "Campo obrigatório") //o firstname nao pode ser vazio
 	private String firstName;
 	private String lastName;
+	@Email(message = "Favor entrar com email valido")
 	private String email;
 	
 	//criar uma list roledto para transitar no json os dados do usuario e permissoes dele
