@@ -8,4 +8,7 @@ import com.devsuperior.dscatalog.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
+	//buscar no bando de dados um usuario por email
+	User findByEmail(String email);
+	
 }
