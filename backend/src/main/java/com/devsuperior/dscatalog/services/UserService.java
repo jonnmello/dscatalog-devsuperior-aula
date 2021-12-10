@@ -4,11 +4,16 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +30,9 @@ import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
+	
+	private static Logger logger = LoggerFactory.getLogger(UserService.class); //usar um objeto de logger ele vai imprimir mensagens no console obdecendo padrao "quem é erro etc"
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder; //tem a disposição esse serviço passwordEncoder vai ser usada para transformar a senha cadastrada do usuario em o codigo hast grandão, codigo decript da senha
@@ -105,6 +112,19 @@ public class UserService {
 		}
 		
 		
+	}
+
+	@Override   //implementar uma busca por email simples
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	
+	User user = repository.findByEmail(username); //esse username ta igual email
+	if (user == null ) { //se o usuario for nullo ele lança exerção
+		logger.error("User not Found: " + username);
+		throw new UsernameNotFoundException("Email not found");
+	}
+	logger.info("User Found: " + username);
+	return user;
+	
 	}
 
 }
