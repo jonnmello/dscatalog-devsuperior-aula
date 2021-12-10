@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devsuperior.dscatalog.dto.RoleDTO;
 import com.devsuperior.dscatalog.dto.UserDTO;
 import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.dto.UserUpdateDTO;
 import com.devsuperior.dscatalog.entities.Role;
 import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.RoleRepository;
@@ -65,7 +66,7 @@ public class UserService {
 	
 
 	@Transactional
-	public UserDTO update(Long id, UserDTO dto) { //para atualizar, pegar o id que quero atualizar
+	public UserDTO update(Long id, UserUpdateDTO dto) { //para atualizar, pegar o id que quero atualizar
 		try {
 			User entity = repository.getOne(id);// e instanciar com o getone(getone só instancia uma entidade monitorada no jpa, ele não vai no banco de dados 
 			copyDtoToEntity(dto, entity); // copiar os dados dto para entidade
